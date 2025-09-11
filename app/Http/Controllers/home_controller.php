@@ -11,6 +11,5 @@ class home_controller
         $plats = Plats::all();
 
         return view('welcome', compact('plats'));
-
     }
 }

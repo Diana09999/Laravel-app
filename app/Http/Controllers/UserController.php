@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use function Laravel\Prompts\error;
+use function Laravel\Prompts\password;
 
 class UserController extends Controller
 {
@@ -11,9 +12,7 @@ class UserController extends Controller
         $validated = $request->validate([
             'email' => 'required|unique:users|email',
             'age' => 'required|numeric',
-            'password' => 'required|min:2048|confirmed'
+            'password' => 'required|max:2048|confirmed'
         ]);
-        
     }
-
 }
