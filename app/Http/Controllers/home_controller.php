@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Plats;
-use App\Models\User;
+use App\Models\Plat;
 
-class home_controller
+class home_controller extends Controller
 {
-    public function show(){
-        $plats = Plats::all();
+    public function show()
+    {
+        $plats = Plat::all();
 
         return view('welcome', compact('plats'));
     }

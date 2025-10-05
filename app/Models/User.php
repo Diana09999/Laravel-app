@@ -9,10 +9,9 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, HasRoles, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -25,7 +24,6 @@ class User extends Authenticatable
         'password',
         'image',
     ];
-
 
     /**
      * The attributes that should be hidden for serialization.
@@ -46,4 +44,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function plats()
+    {
+        return $this->hasMany(Plat::class, 'user_id', 'plat_id');
+    }
+
+    public function favoris()
+    {
+        return $this->belongsToMany(Plat::class, 'favoris', 'user_id', 'plat_id');
+    }
 }

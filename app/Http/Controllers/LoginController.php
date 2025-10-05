@@ -3,17 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function index() {
-        $data = [
-            'title' => 'Inscription - '.config('app.name'),
-            'description' => 'Inscription sur le site -'.config('app.name'),
-        ];
-        return view('auth.login', $data);
+    public function index()
+    {
+        return view('auth.login');
     }
-    public function login(){
-        return 'je suis connecté';
+
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect()->intended('/plats');
+        }
+
+        return back()->withErrors([
+            'email' => 'Identifiants incorrects',
+        ]);
     }
 }
